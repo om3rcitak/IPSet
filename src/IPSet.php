@@ -151,7 +151,6 @@ class IPSet
 		} else {
 			list($net, $mask) = explode('/', $cidr, 2);
 			if (!ctype_digit($mask) || intval($mask) > $defMask) {
-				trigger_error("IPSet: Bad mask '$mask' from '$cidr', ignored", E_USER_WARNING);
 				return false;
 			}
 		}
