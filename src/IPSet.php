@@ -22,7 +22,7 @@
  * @author Brandon Black <blblack@gmail.com>
  */
 
-namespace Wikimedia;
+namespace Om3rcitak;
 
 use Wikimedia\AtEase\AtEase;
 
@@ -31,7 +31,7 @@ use Wikimedia\AtEase\AtEase;
  *
  * Usage:
  *
- *     use Wikimedia\IPSet;
+ *     use Om3rcitak\IPSet;
  *     // At startup, calculate the optimized data structure for the set:
  *     $ipset = new IPSet( [
  *         '208.80.154.0/26',

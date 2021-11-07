@@ -1,5 +1,5 @@
 {
-	"name": "wikimedia/ip-set",
+	"name": "om3rcitak/ip-set",
 	"description": "Efficiently match IP addresses against a set of CIDR specifications.",
 	"license": "GPL-2.0-or-later",
 	"homepage": "https://www.mediawiki.org/wiki/IPSet",
@@ -7,11 +7,15 @@
 		{
 			"name": "Brandon Black",
 			"email": "blblack@gmail.com"
+		},
+		{
+			"name": "Omer Citak",
+			"email": "mail@omercitak.com"
 		}
 	],
 	"autoload": {
 		"psr-4": {
-			"Wikimedia\\": "src/"
+			"Om3rcitak\\": "src/"
 		}
 	},
 	"require": {

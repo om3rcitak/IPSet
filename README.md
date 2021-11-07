@@ -1,23 +1,29 @@
 IPSet
 =====
 
+___Note: This project is forked from Wikimedia/IPSet.___
+
 IPSet is a PHP library for matching IP addresses against a set of CIDR
 specifications.
 
 Here is how you use it:
 
 <pre lang="php">
-use Wikimedia\IPSet;
+use Om3rcitak\IPSet; 
 // At startup, calculate the optimized data structure for the set:
 $ipset = new IPSet( [
+
     '208.80.154.0/26',
     '2620:0:861:1::/64',
     '10.64.0.0/22',
-] );
+
+] ); 
 
 // Runtime check against cached set (returns bool):
 if ( $ipset->match( $ip ) ) {
+
     // ...
+
 }
 </pre>
 
@@ -49,6 +55,7 @@ The v4 tree would look like:
 
 <pre lang="php">
 root4 => [
+
     'comp' => 25,
     'next' => [
         0 => true,
@@ -57,12 +64,12 @@ root4 => [
             1 => true,
         ],
     ],
-];
+
+]; 
 </pre>
 
 (multi-byte compression nodes were attempted as well, but were
 a net loss in my test scenarios due to additional match complexity)
-
 
 License
 -------
@@ -73,12 +80,12 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
+This program is distributed in the hope that it will be useful, 
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
+with this program; if not, write to the Free Software Foundation, Inc., 
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 <http://www.gnu.org/copyleft/gpl.html>

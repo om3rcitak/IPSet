@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2014, 2015 Brandon Black <blblack@gmail.com>
  *
@@ -20,14 +21,15 @@
  * http://www.gnu.org/copyleft/gpl.html
  */
 
-namespace Wikimedia\IPSet\Test;
+namespace Om3rcitak\IPSet\Test;
 
-use Wikimedia\IPSet;
+use Om3rcitak\IPSet;
 
 /**
  * @group IPSet
  */
-class IPSetTest extends \PHPUnit\Framework\TestCase {
+class IPSetTest extends \PHPUnit\Framework\TestCase
+{
 
 	/**
 	 * Provides test cases for IPSetTest::testIPSet
@@ -37,7 +39,8 @@ class IPSetTest extends \PHPUnit\Framework\TestCase {
 	 * config is an array constructor argument for IPSet, and the tests are
 	 * an array of IP => expected (boolean) result against the config dataset.
 	 */
-	public static function provideIPSets() {
+	public static function provideIPSets()
+	{
 		$testcases = [
 			'old_list_subset' => [
 				[
@@ -272,7 +275,7 @@ class IPSetTest extends \PHPUnit\Framework\TestCase {
 				],
 			],
 		];
-		foreach ( $testcases as $desc => $pairs ) {
+		foreach ($testcases as $desc => $pairs) {
 			$testcases[$desc] = [
 				$desc,
 				$pairs[0],
@@ -287,64 +290,71 @@ class IPSetTest extends \PHPUnit\Framework\TestCase {
 	 *
 	 * @dataProvider provideIPSets
 	 */
-	public function testIPSet( $desc, array $cfg, array $tests ) {
-		$ipset = new IPSet( $cfg );
-		foreach ( $tests as $ip => $expected ) {
-			$result = $ipset->match( $ip );
-			$this->assertEquals( $expected, $result, "Incorrect match() result for $ip in dataset $desc" );
+	public function testIPSet($desc, array $cfg, array $tests)
+	{
+		$ipset = new IPSet($cfg);
+		foreach ($tests as $ip => $expected) {
+			$result = $ipset->match($ip);
+			$this->assertEquals($expected, $result, "Incorrect match() result for $ip in dataset $desc");
 		}
 	}
 
-	public static function provideBadMaskSets() {
+	public static function provideBadMaskSets()
+	{
 		return [
-			'bad mask ipv4' => [ '0.0.0.0/33' ],
-			'bad mask ipv6' => [ '2620:0:861:1::/129' ],
+			'bad mask ipv4' => ['0.0.0.0/33'],
+			'bad mask ipv6' => ['2620:0:861:1::/129'],
 		];
 	}
 
 	/**
 	 * @dataProvider provideBadMaskSets
 	 */
-	public function testAddCidrWarning( $cidr ) {
+	public function testAddCidrWarning($cidr)
+	{
 		$this->expectWarning();
-		$this->expectWarningMessageMatches( '/IPSet: Bad mask.*/' );
+		$this->expectWarningMessageMatches('/IPSet: Bad mask.*/');
 		// 1. Ignoring errors to reach the otherwise unreachable 'return'.
 		// https://github.com/sebastianbergmann/php-code-coverage/issues/513
 		// phpcs:ignore Generic.PHP.NoSilencedErrors
-		$ipset = @new IPSet( [ $cidr ] );
+		$ipset = @new IPSet([$cidr]);
 		// 2. Catches error as exception
-		$ipset = new IPSet( [ $cidr ] );
+		$ipset = new IPSet([$cidr]);
 	}
 
-	public static function provideBadIPSets() {
+	public static function provideBadIPSets()
+	{
 		return [
-			'inet fail' => [ '0af.0af' ],
+			'inet fail' => ['0af.0af'],
 		];
 	}
 
 	/**
 	 * @dataProvider provideBadIPSets
 	 */
-	public function testAddCidrFailure( $cidr ) {
-		$method = new \ReflectionMethod( IPSet::class, 'addCidr' );
-		$method->setAccessible( true );
-		$ipset = new IPSet( [ $cidr ] );
-		$this->assertFalse( $method->invoke( $ipset, $cidr ) );
+	public function testAddCidrFailure($cidr)
+	{
+		$method = new \ReflectionMethod(IPSet::class, 'addCidr');
+		$method->setAccessible(true);
+		$ipset = new IPSet([$cidr]);
+		$this->assertFalse($method->invoke($ipset, $cidr));
 	}
 
-	public static function provideBadMatches() {
+	public static function provideBadMatches()
+	{
 		return [
-			'inet fail' => [ '0af.0af', false ],
+			'inet fail' => ['0af.0af', false],
 		];
 	}
 
 	/**
 	 * @dataProvider provideBadMatches
 	 */
-	public function testMatchFailure( $ip, $expected ) {
-		$ipset = new IPSet( [] );
+	public function testMatchFailure($ip, $expected)
+	{
+		$ipset = new IPSet([]);
 		// phpcs:ignore Generic.PHP.NoSilencedErrors
-		$this->assertEquals( $expected, @$ipset->match( $ip ) );
-		$this->assertFalse( $ipset->match( $ip ) );
+		$this->assertEquals($expected, @$ipset->match($ip));
+		$this->assertFalse($ipset->match($ip));
 	}
 }
